@@ -2,11 +2,15 @@
 
 const searchBar = document.getElementById('search-content');
 const divCards = document.getElementById('cards-recipes');
-const headerIcon = document.getElementById('header-flex');
 const buttonAppareils = document.getElementById('button-appareils');
 const buttonUstensiles = document.getElementById('button-ustensiles');
 const buttonIngredients = document.getElementById('button-ingredients');
-
+const dropDownIngredients = document.getElementById('ingredients-dropdown');
+const searchBarIngredients = document.getElementById('search_ingredients');
+const searchBarAppareils = document.getElementById('search_appareils');
+const searchBarUstensiles = document.getElementById('search_ustensiles');
+const dropdownAppareils = document.getElementById('dropdown_appareils');
+const dropdownUstensiles = document.getElementById('dropdown_ustensiles');
 
 // Ajout icon 
 
@@ -17,10 +21,21 @@ buttonUstensiles.style.backgroundColor = "#ED6454"
 buttonUstensiles.style.borderColor = "#ED6454";
 buttonIngredients.style.backgroundColor = "#3282F7";
 buttonIngredients.style.borderColor = "#3282F7";
+dropDownIngredients.style.backgroundColor = "#3282F7";
+dropdownAppareils.style.backgroundColor =  "#68D9A4";
+dropdownUstensiles.style.backgroundColor = "#ED6454";
+
 
 // Récupération des recettes présentes dans un autre fichier
 import { recipes } from "../data/recipes.js";
 console.log(recipes);
+
+// Array
+let arrayIngredients = [];
+let arrayAppareils = [];
+let arrayUstensiles = [];
+let arrayUstensils = [];
+
 
 
 //Création dynamique des cards recettes 
@@ -60,6 +75,10 @@ for (let i = 0; i < recipes.length; i++) {
     cardsRecipesBody.appendChild(cardsRecipesTitle);
     cardsRecipesBody.appendChild(cardsRecipesTime);
     let ingredients = recipes[i].ingredients;
+    let appareils = recipes[i].appliance;
+    let ustensiles = recipes[i].ustensils;
+    arrayAppareils.push(appareils);
+    arrayUstensiles.push(ustensiles);
     for (let y = 0; y < ingredients.length; y++) {
         let ingredientName = ingredients[y].ingredient;
         let ingredientQuantity = ingredients[y].quantity;
@@ -78,9 +97,12 @@ for (let i = 0; i < recipes.length; i++) {
             cardsRecipesIngredients.innerText = ingredientName;
         }
         cardsRecipesBody.appendChild(cardsRecipesIngredients);
+        arrayIngredients.push(ingredientName);
+        
+
     }
     cardsRecipesBody.appendChild(cardsRecipesDescriptions);
-    function searchAliments() {
+    function searchRecipes() {
         let inputSearch = searchBar.value;
         inputSearch = inputSearch.toLowerCase();
         let matchFound = false;
@@ -102,58 +124,138 @@ for (let i = 0; i < recipes.length; i++) {
         }
     }
     searchBar.onkeyup = function() {
-            searchAliments() 
+            searchRecipes() 
         
     }
    
 }
 
-/* Min length search bar 
-function minLenghtSearchBar() {
-    if (searchBar.value < 3) {
-        console.log("recherche invalide");
-    } 
-    else if (searchBar.value >= 3) {
-    console.log("recherche valide");
-}
-
-}
-
-function searchRecipes() {
-    let filter, divContent, p, i, textValue;
-    filter = searchBar.value.toUpperCase();
-    divContent = divCards.getElementsByTagName("div");
-    for (i = 0; i < divContent.length; i++) {
-        p = divContent[i].getElementsByTagName('p')[0];
-        textValue = p.textContent || a.innerText;
-        if (textValue.toUpperCase().indexOf(filter) > -1) {
-            divContent[i].style.display = "";
-        } else {
-            divContent[i].style.display = "none";
-        }
+// Récupérer array ustensils
+for (let i = 0; i < arrayUstensiles.length; i++) {
+    for (let z = 0; z < arrayUstensiles[i].length; z++) {
+        let filtredArrayUstensils = arrayUstensiles[i][z];
+        arrayUstensils.push(filtredArrayUstensils);
     }
 }
 
-searchBar.onkeyup = function() {
-    searchRecipes()
-}
+// Filtre doublon ingrédients
+let filtredArrayIngredients = [];
+arrayIngredients.forEach((c) => {
+    if (!filtredArrayIngredients.includes(c)) {
+        filtredArrayIngredients.push(c)
+    }
+})
+console.log(filtredArrayIngredients)
 
-function searchAliments() {
-    let input = searchBar.value;
-    input = input.toLowerCase();
-    let x = document.getElementsByClassName('titre');
-    let y = document.getElementsByClassName('figure');
-    for (let i = 0; i < y.length; i++) {
-        if (!y[i].innerHTML.toLowerCase().includes(input) && input.length == 3) {
-            y[i].style.display = "none";
+// Filtre doublon appareils
+let filtredArrayAppareils = [];
+arrayAppareils.forEach((c) => {
+    if (!filtredArrayAppareils.includes(c)) {
+        filtredArrayAppareils.push(c)
+    }
+})
+console.log(filtredArrayAppareils)
+
+// Filtre doublon ustensils
+let filtredArrayUstensils = [];
+arrayUstensils.forEach((c) => {
+    if (!filtredArrayUstensils.includes(c)) {
+        filtredArrayUstensils.push(c)
+    }
+})
+console.log(filtredArrayUstensils)
+
+// Recherche et liste ingrédients
+for (let i = 0; i < filtredArrayIngredients.length; i++) {
+    let listIngredients = document.createElement('li');
+    listIngredients.classList.add('list_ingredient');
+    let newListIngredients = filtredArrayIngredients[i];
+    listIngredients.innerText = newListIngredients;
+    listIngredients.style.color = "#FFFFFF";
+    dropDownIngredients.appendChild(listIngredients);
+    // Search Bar Ingrédients
+    function searchIngredients() {
+        let inputSearchIngredients = searchBarIngredients.value;
+        inputSearchIngredients = inputSearchIngredients.toLowerCase();
+        let matchFoundIngredients = false;
+        let searchElementIngredients = document.getElementsByClassName('list_ingredient');
+        for (let a = 0; a < searchElementIngredients.length; a++) {
+            if (!searchElementIngredients[a].innerHTML.toLowerCase().includes(inputSearchIngredients) && inputSearchIngredients.length >= 3) {
+                searchElementIngredients[a].style.display = "none";
+            }
+            else {
+                searchElementIngredients[a].style.display = "";
+                matchFoundIngredients = true;
+            }
         }
-        else {
-            y[i].style.display = "";
-        }
+
+        
+    }
+    searchBarIngredients.onkeyup = function() {
+        searchIngredients()
     }
 }
 
-searchBar.onkeyup = function() {
-    searchAliments()
-}*/
+// Recherche et liste Appareils
+for (let i = 0; i < filtredArrayAppareils.length; i++) {
+    let listAppareils = document.createElement('li');
+    listAppareils.classList.add('list_appareils');
+    let newListAppareils = filtredArrayAppareils[i];
+    listAppareils.innerText = newListAppareils;
+    listAppareils.style.color = "#FFFFFF";
+    dropdownAppareils.appendChild(listAppareils);
+    // Search Bar Appareils
+    function searchAppareils() {
+        let inputSearchAppareils = searchBarAppareils.value;
+        inputSearchAppareils = inputSearchAppareils.toLowerCase();
+        let matchFoundAppareils = false;
+        let searchElementAppareils = document.getElementsByClassName('list_appareils');
+        for (let a = 0; a < searchElementAppareils.length; a++) {
+            if (!searchElementAppareils[a].innerHTML.toLowerCase().includes(inputSearchAppareils) && inputSearchAppareils.length >= 3) {
+                searchElementAppareils[a].style.display = "none";
+            }
+            else {
+                searchElementAppareils[a].style.display = "";
+                matchFoundAppareils = true;
+            }
+        }
 
+        
+    }
+    searchBarAppareils.onkeyup = function() {
+        searchAppareils()
+    }
+}
+
+// Recherche et liste Ustensiles
+
+for (let i = 0; i < filtredArrayUstensils.length; i++) {
+    let listUstensils = document.createElement('li');
+    listUstensils.classList.add('list_ustensils');
+    let newListUstensils = filtredArrayUstensils[i];
+    listUstensils.innerText = newListUstensils;
+    listUstensils.style.color = "#FFFFFF";
+    dropdownUstensiles.appendChild(listUstensils);
+    
+    // Search Bar Ustensiles
+    function searchUstensils() {
+        let inputSearchUstensils = searchBarUstensiles.value;
+        inputSearchUstensils = inputSearchUstensils.toLowerCase();
+        let matchFoundUstensils = false;
+        let searchElementUstensils = document.getElementsByClassName('list_ustensils');
+        for (let a = 0; a < searchElementUstensils.length; a++) {
+            if (!searchElementUstensils[a].innerHTML.toLowerCase().includes(inputSearchUstensils) && inputSearchUstensils.length >= 3) {
+                searchElementUstensils[a].style.display = "none";
+            }
+            else {
+                searchElementUstensils[a].style.display = "";
+                matchFoundUstensils = true;
+            }
+        }
+
+        
+    }
+    searchBarUstensiles.onkeyup = function() {
+        searchUstensils()
+    }
+}
