@@ -11,6 +11,9 @@ const searchBarAppareils = document.getElementById('search_appareils');
 const searchBarUstensiles = document.getElementById('search_ustensiles');
 const dropdownAppareils = document.getElementById('dropdown_appareils');
 const dropdownUstensiles = document.getElementById('dropdown_ustensiles');
+const tagDiv = document.getElementById('tag');
+
+
 
 // Ajout icon 
 
@@ -76,7 +79,15 @@ for (let i = 0; i < recipes.length; i++) {
     cardsRecipesBody.appendChild(cardsRecipesTime);
     let ingredients = recipes[i].ingredients;
     let appareils = recipes[i].appliance;
+    let appareilsPart = document.createElement('p');
+    cardsRecipes.appendChild(appareilsPart);
+    appareilsPart.innerHTML = appareils;
+    appareilsPart.style.display = "none";
     let ustensiles = recipes[i].ustensils;
+    let ustensilsPart = document.createElement('p');
+    cardsRecipes.appendChild(ustensilsPart);
+    ustensilsPart.innerHTML = ustensiles;
+    ustensilsPart.style.display = "none";
     arrayAppareils.push(appareils);
     arrayUstensiles.push(ustensiles);
     for (let y = 0; y < ingredients.length; y++) {
@@ -145,7 +156,6 @@ arrayIngredients.forEach((c) => {
         filtredArrayIngredients.push(c)
     }
 })
-console.log(filtredArrayIngredients)
 
 // Filtre doublon appareils
 let filtredArrayAppareils = [];
@@ -154,7 +164,6 @@ arrayAppareils.forEach((c) => {
         filtredArrayAppareils.push(c)
     }
 })
-console.log(filtredArrayAppareils)
 
 // Filtre doublon ustensils
 let filtredArrayUstensils = [];
@@ -163,7 +172,9 @@ arrayUstensils.forEach((c) => {
         filtredArrayUstensils.push(c)
     }
 })
-console.log(filtredArrayUstensils)
+
+
+
 
 // Recherche et liste ingrédients
 for (let i = 0; i < filtredArrayIngredients.length; i++) {
@@ -178,9 +189,10 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
         let inputSearchIngredients = searchBarIngredients.value;
         inputSearchIngredients = inputSearchIngredients.toLowerCase();
         let matchFoundIngredients = false;
+        let errorIngredients = document.getElementById('error_ingredient');
         let searchElementIngredients = document.getElementsByClassName('list_ingredient');
         for (let a = 0; a < searchElementIngredients.length; a++) {
-            if (!searchElementIngredients[a].innerHTML.toLowerCase().includes(inputSearchIngredients) && inputSearchIngredients.length >= 3) {
+            if (!searchElementIngredients[a].innerHTML.toLowerCase().includes(inputSearchIngredients)) {
                 searchElementIngredients[a].style.display = "none";
             }
             else {
@@ -188,12 +200,48 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
                 matchFoundIngredients = true;
             }
         }
+        if (!matchFoundIngredients) {
+            errorIngredients.style.display = "block";
+        } else {
+            errorIngredients.style.display = "none";
+        }
 
         
     }
     searchBarIngredients.onkeyup = function() {
         searchIngredients()
     }
+    listIngredients.onclick = function() {
+       let contentIngredients = listIngredients.textContent;
+       let badgeIngredients = document.createElement('span');
+       /*badgeIngredients.onclick = function() {
+           badgeIngredients.style.display = "none";
+       }*/
+       tagDiv.appendChild(badgeIngredients);
+       badgeIngredients.classList.add("badge");
+       badgeIngredients.textContent = contentIngredients;
+       const ingredientTags = [...document.querySelectorAll('.badge')];
+       const textIngredients = new Set(ingredientTags.map(x => x.innerHTML));
+       ingredientTags.forEach(ingredientTag => {
+           if(textIngredients.has(ingredientTag.innerHTML)) {
+               textIngredients.delete(ingredientTag.innerHTML);
+           } else {
+                ingredientTag.remove()
+           }
+       })
+       console.log(badgeIngredients)
+       badgeIngredients.style.display = "inline-block";
+       let searchElement = document.getElementsByClassName('col-4');
+        for (let b = 0; b < searchElement.length; b++) {
+            if (!searchElement[b].innerHTML.includes(badgeIngredients.textContent)) {
+                searchElement[b].style.display = "none";
+            }
+        }
+      
+
+    }
+    
+    
 }
 
 // Recherche et liste Appareils
@@ -209,9 +257,10 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
         let inputSearchAppareils = searchBarAppareils.value;
         inputSearchAppareils = inputSearchAppareils.toLowerCase();
         let matchFoundAppareils = false;
+        let errorAppareils = document.getElementById('error_appareil')
         let searchElementAppareils = document.getElementsByClassName('list_appareils');
         for (let a = 0; a < searchElementAppareils.length; a++) {
-            if (!searchElementAppareils[a].innerHTML.toLowerCase().includes(inputSearchAppareils) && inputSearchAppareils.length >= 3) {
+            if (!searchElementAppareils[a].innerHTML.toLowerCase().includes(inputSearchAppareils)) {
                 searchElementAppareils[a].style.display = "none";
             }
             else {
@@ -219,12 +268,44 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
                 matchFoundAppareils = true;
             }
         }
+        if (!matchFoundAppareils) {
+            errorAppareils.style.display = "block";
+        } else {
+            errorAppareils.style.display = "none";
+        }
 
         
     }
     searchBarAppareils.onkeyup = function() {
         searchAppareils()
     }
+    listAppareils.onclick = function() {
+        let contentAppareils = listAppareils.textContent;
+        contentAppareils = contentAppareils.toLowerCase();
+        let badgeAppareils = document.createElement('span');
+        badgeAppareils.style.backgroundColor = "#68D9A4"
+        console.log(contentAppareils)
+        tagDiv.appendChild(badgeAppareils);
+        badgeAppareils.classList.add("badge");
+        badgeAppareils.textContent = contentAppareils;
+        badgeAppareils.style.display = "inline-block";
+        const appareilsTags = [...document.querySelectorAll('.badge')];
+        const textAppareils = new Set(appareilsTags.map(x => x.innerHTML));
+        appareilsTags.forEach(appareilsTag => {
+           if(textAppareils.has(appareilsTag.innerHTML)) {
+            textAppareils.delete(appareilsTag.innerHTML);
+           } else {
+            appareilsTag.remove()
+           }
+        })
+        let searchElement = document.getElementsByClassName('col-4');
+            for (let b = 0; b < searchElement.length; b++) {
+             if (!searchElement[b].innerHTML.toLowerCase().includes(badgeAppareils.textContent)) {
+                 searchElement[b].style.display = "none";
+             
+         }
+        }
+     }
 }
 
 // Recherche et liste Ustensiles
@@ -242,9 +323,10 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
         let inputSearchUstensils = searchBarUstensiles.value;
         inputSearchUstensils = inputSearchUstensils.toLowerCase();
         let matchFoundUstensils = false;
+        let errorUstensils = document.getElementById('error_ustensils');
         let searchElementUstensils = document.getElementsByClassName('list_ustensils');
         for (let a = 0; a < searchElementUstensils.length; a++) {
-            if (!searchElementUstensils[a].innerHTML.toLowerCase().includes(inputSearchUstensils) && inputSearchUstensils.length >= 3) {
+            if (!searchElementUstensils[a].innerHTML.toLowerCase().includes(inputSearchUstensils)) {
                 searchElementUstensils[a].style.display = "none";
             }
             else {
@@ -252,10 +334,43 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
                 matchFoundUstensils = true;
             }
         }
-
-        
+        if (!matchFoundUstensils) {
+            errorUstensils.style.display = "block";
+        } else {
+            errorUstensils.style.display = "none";
+        }
     }
     searchBarUstensiles.onkeyup = function() {
         searchUstensils()
     }
+    listUstensils.onclick = function() {
+        let contentUstensils = listUstensils.textContent;
+        contentUstensils = contentUstensils.toLowerCase();
+        let badgeUstensils = document.createElement('span');
+        badgeUstensils.style.backgroundColor = "#ED6454"
+        console.log(contentUstensils)
+        tagDiv.appendChild(badgeUstensils);
+        badgeUstensils.classList.add("badge");
+        badgeUstensils.textContent = contentUstensils;
+        badgeUstensils.style.display = "inline-block";
+        const ustensilsTags = [...document.querySelectorAll('.badge')];
+        const textUstensils = new Set(ustensilsTags.map(x => x.innerHTML));
+        ustensilsTags.forEach(ustensilsTag => {
+           if(textUstensils.has(ustensilsTag.innerHTML)) {
+            textUstensils.delete(ustensilsTag.innerHTML);
+           } else {
+            ustensilsTag.remove()
+           }
+        })
+        let searchElement = document.getElementsByClassName('col-4');
+            for (let b = 0; b < searchElement.length; b++) {
+             if (!searchElement[b].innerHTML.toLowerCase().includes(badgeUstensils.textContent)) {
+                 searchElement[b].style.display = "none";
+             
+         }
+        } 
+         
+       
+ 
+     }
 }

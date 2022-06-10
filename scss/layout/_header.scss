@@ -22,3 +22,31 @@
     #error {
         display: none;
     }
+
+.badge {
+    display: none;
+    background-color: #3282F7;
+    margin-right: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+
+}
+
+#error_appareil {
+    display: none;
+    color: white;
+}
+
+#error_ingredient {
+    display: none;
+    color: white;
+}
+
+#error_ustensils {
+    display: none;
+    color: white;
+}
+
+li {
+    padding: 1rem;
+}

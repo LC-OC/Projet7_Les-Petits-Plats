@@ -59,7 +59,7 @@ export const recipes = [
                 "quantity" : 5
             },
             {
-                "ingredient" : "Lait de Coco",
+                "ingredient" : "Lait de coco",
                 "quantity" : 100,
                 "unit" : "ml"
             }
@@ -454,7 +454,7 @@ export const recipes = [
                 "unit":"cuillère à soupe"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -569,7 +569,7 @@ export const recipes = [
                 "unit":"tiges"
             },
             {
-                "ingredient": "huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -695,7 +695,7 @@ export const recipes = [
                 "unit":"grammes"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 1,
                 "unit": "cuillères à soupe"
             }
@@ -908,7 +908,7 @@ export const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olives"
+                "ingredient": "Huile d'olive"
             },
             {
                 "ingredient": "Oignon",
@@ -1281,7 +1281,7 @@ export const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 25,
                 "unit": "cl"
             },
