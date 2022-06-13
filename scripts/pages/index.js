@@ -14,9 +14,6 @@ const dropdownUstensiles = document.getElementById('dropdown_ustensiles');
 const tagDiv = document.getElementById('tag');
 
 
-
-// Ajout icon 
-
 // Color button
 buttonAppareils.style.backgroundColor = "#68D9A4";
 buttonAppareils.style.borderColor = "#68D9A4";
@@ -47,6 +44,7 @@ for (let i = 0; i < recipes.length; i++) {
     cardsCols.classList.add('col-4');
     let cardsRecipes = document.createElement('div');
     cardsRecipes.classList.add('card');
+    cardsRecipes.style.cursor = "pointer";
     cardsRecipes.style.margin = '1rem 0';
     cardsRecipes.style.height = '15rem';
     cardsRecipes.style.backgroundColor = "#E7E7E7";
@@ -182,6 +180,7 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
     listIngredients.classList.add('list_ingredient');
     let newListIngredients = filtredArrayIngredients[i];
     listIngredients.innerText = newListIngredients;
+    listIngredients.style.cursor = "pointer";
     listIngredients.style.color = "#FFFFFF";
     dropDownIngredients.appendChild(listIngredients);
     // Search Bar Ingrédients
@@ -214,32 +213,36 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
     listIngredients.onclick = function() {
        let contentIngredients = listIngredients.textContent;
        let badgeIngredients = document.createElement('span');
-       /*badgeIngredients.onclick = function() {
-           badgeIngredients.style.display = "none";
-       }*/
        tagDiv.appendChild(badgeIngredients);
        badgeIngredients.classList.add("badge");
-       badgeIngredients.textContent = contentIngredients;
-       const ingredientTags = [...document.querySelectorAll('.badge')];
-       const textIngredients = new Set(ingredientTags.map(x => x.innerHTML));
-       ingredientTags.forEach(ingredientTag => {
-           if(textIngredients.has(ingredientTag.innerHTML)) {
-               textIngredients.delete(ingredientTag.innerHTML);
+       badgeIngredients.style.cursor = "pointer";
+       badgeIngredients.innerHTML = contentIngredients;
+       const ingredientsTags = [...document.querySelectorAll('.badge')];
+        const textIngredients = new Set(ingredientsTags.map(x => x.innerHTML));
+        ingredientsTags.forEach(ingredientsTag => {
+           if(textIngredients.has(ingredientsTag.innerHTML)) {
+            textIngredients.delete(ingredientsTag.innerHTML);
            } else {
-                ingredientTag.remove()
+            ingredientsTag.remove()
            }
-       })
-       console.log(badgeIngredients)
+        })
        badgeIngredients.style.display = "inline-block";
        let searchElement = document.getElementsByClassName('col-4');
         for (let b = 0; b < searchElement.length; b++) {
             if (!searchElement[b].innerHTML.includes(badgeIngredients.textContent)) {
                 searchElement[b].style.display = "none";
-            }
+            } 
+            badgeIngredients.addEventListener('click', function() {
+                if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
+                    searchElement[b].style.display = "block";
+                    this.remove();
+                    tagDiv.textContent = "";
+                } 
+              })
         }
-      
-
+        
     }
+
     
     
 }
@@ -250,6 +253,7 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
     listAppareils.classList.add('list_appareils');
     let newListAppareils = filtredArrayAppareils[i];
     listAppareils.innerText = newListAppareils;
+    listAppareils.style.cursor = "pointer";
     listAppareils.style.color = "#FFFFFF";
     dropdownAppareils.appendChild(listAppareils);
     // Search Bar Appareils
@@ -283,12 +287,15 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
         let contentAppareils = listAppareils.textContent;
         contentAppareils = contentAppareils.toLowerCase();
         let badgeAppareils = document.createElement('span');
-        badgeAppareils.style.backgroundColor = "#68D9A4"
+        badgeAppareils.style.backgroundColor = "#68D9A4";
         console.log(contentAppareils)
         tagDiv.appendChild(badgeAppareils);
+        badgeAppareils.style.cursor = "pointer";
         badgeAppareils.classList.add("badge");
-        badgeAppareils.textContent = contentAppareils;
+        badgeAppareils.innerHTML = contentAppareils;
         badgeAppareils.style.display = "inline-block";
+        let testIcon = document.createElement('span');
+        testIcon.innerHTML = '<i class="far fa-times-circle"></i>';
         const appareilsTags = [...document.querySelectorAll('.badge')];
         const textAppareils = new Set(appareilsTags.map(x => x.innerHTML));
         appareilsTags.forEach(appareilsTag => {
@@ -298,14 +305,23 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
             appareilsTag.remove()
            }
         })
+        
         let searchElement = document.getElementsByClassName('col-4');
             for (let b = 0; b < searchElement.length; b++) {
              if (!searchElement[b].innerHTML.toLowerCase().includes(badgeAppareils.textContent)) {
                  searchElement[b].style.display = "none";
-             
-         }
+          } 
+          badgeAppareils.addEventListener('click', function() {
+            if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
+                console.log('bonjour!')
+                searchElement[b].style.display = "block";
+                this.remove();
+                tagDiv.textContent = "";
+            } 
+          })
+          }
+           
         }
-     }
 }
 
 // Recherche et liste Ustensiles
@@ -316,6 +332,7 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
     let newListUstensils = filtredArrayUstensils[i];
     listUstensils.innerText = newListUstensils;
     listUstensils.style.color = "#FFFFFF";
+    listUstensils.style.cursor = "pointer";
     dropdownUstensiles.appendChild(listUstensils);
     
     // Search Bar Ustensiles
@@ -351,7 +368,8 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
         console.log(contentUstensils)
         tagDiv.appendChild(badgeUstensils);
         badgeUstensils.classList.add("badge");
-        badgeUstensils.textContent = contentUstensils;
+        badgeUstensils.innerHTML = contentUstensils;
+        badgeUstensils.style.cursor = "pointer";
         badgeUstensils.style.display = "inline-block";
         const ustensilsTags = [...document.querySelectorAll('.badge')];
         const textUstensils = new Set(ustensilsTags.map(x => x.innerHTML));
@@ -365,9 +383,16 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
         let searchElement = document.getElementsByClassName('col-4');
             for (let b = 0; b < searchElement.length; b++) {
              if (!searchElement[b].innerHTML.toLowerCase().includes(badgeUstensils.textContent)) {
-                 searchElement[b].style.display = "none";
-             
+                 searchElement[b].style.display = "none";   
          }
+         badgeUstensils.addEventListener('click', function() {
+            if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
+                console.log('bonjour!')
+                searchElement[b].style.display = "block";
+                this.remove();
+                tagDiv.textContent = "";
+            } 
+          })
         } 
          
        
