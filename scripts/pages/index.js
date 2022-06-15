@@ -89,6 +89,11 @@ for (let i = 0; i < recipes.length; i++) {
     arrayAppareils.push(appareils);
     arrayUstensiles.push(ustensiles);
     for (let y = 0; y < ingredients.length; y++) {
+        let ingredientListTes = document.createElement('p');
+        ingredientListTes.innerHTML = ingredients[y].ingredient;
+        cardsRecipes.appendChild(ingredientListTes);
+        ingredientListTes.classList.add('test')
+        ingredientListTes.style.display = "none";
         let ingredientName = ingredients[y].ingredient;
         let ingredientQuantity = ingredients[y].quantity;
         let ingredientUnit = ingredients[y].unit;
@@ -107,7 +112,6 @@ for (let i = 0; i < recipes.length; i++) {
         }
         cardsRecipesBody.appendChild(cardsRecipesIngredients);
         arrayIngredients.push(ingredientName);
-        
 
     }
     cardsRecipesBody.appendChild(cardsRecipesDescriptions);
@@ -172,8 +176,6 @@ arrayUstensils.forEach((c) => {
 })
 
 
-
-
 // Recherche et liste ingrédients
 for (let i = 0; i < filtredArrayIngredients.length; i++) {
     let listIngredients = document.createElement('li');
@@ -228,25 +230,25 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
         })
        badgeIngredients.style.display = "inline-block";
        let searchElement = document.getElementsByClassName('col-4');
-        for (let b = 0; b < searchElement.length; b++) {
+            for (let b = 0; b < searchElement.length; b++) {
             if (!searchElement[b].innerHTML.includes(badgeIngredients.textContent)) {
                 searchElement[b].style.display = "none";
-            } 
+            }
+            
+            
+            // Supprimer filtre
             badgeIngredients.addEventListener('click', function() {
                 if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
                     searchElement[b].style.display = "block";
                     this.remove();
                     tagDiv.textContent = "";
+                    searchBar.value = "";
+                    
                 } 
               })
         }
-        
+        }
     }
-
-    
-    
-}
-
 // Recherche et liste Appareils
 for (let i = 0; i < filtredArrayAppareils.length; i++) {
     let listAppareils = document.createElement('li');
@@ -305,7 +307,6 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
             appareilsTag.remove()
            }
         })
-        
         let searchElement = document.getElementsByClassName('col-4');
             for (let b = 0; b < searchElement.length; b++) {
              if (!searchElement[b].innerHTML.toLowerCase().includes(badgeAppareils.textContent)) {
@@ -313,7 +314,6 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
           } 
           badgeAppareils.addEventListener('click', function() {
             if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
-                console.log('bonjour!')
                 searchElement[b].style.display = "block";
                 this.remove();
                 tagDiv.textContent = "";
