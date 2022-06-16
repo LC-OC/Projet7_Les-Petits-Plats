@@ -1,0 +1,32 @@
+#cards-recipes {
+    margin-top: 1rem;
+    .card {
+        cursor: pointer;
+        margin: 1rem 0;
+        height: 15rem;
+        background-color: #E7E7E7;
+        .card-img-top {
+            height: 250%;
+            background-color: #C7BEBE;
+
+        }
+        .card-body {
+            overflow: scroll;
+            h2 {
+                size: 16px;
+                color: black;
+            }
+            .description_recipes {
+                height: 10rem;
+                width: 55%;
+                padding: 0.5rem;
+                overflow: scroll;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+.dropdown-menu {
+    color: white;
+}

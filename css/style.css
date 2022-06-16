@@ -114,12 +114,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: calc(1.325rem + 0.9vw);
-}
-@media (min-width: 1200px) {
-  h2, .h2 {
-    font-size: 2rem;
-  }
+  font-size: 1rem;
 }
 
 h3, .h3 {
@@ -7442,7 +7437,7 @@ textarea.form-control-lg {
 }
 
 .fs-2 {
-  font-size: calc(1.325rem + 0.9vw) !important;
+  font-size: 1rem !important;
 }
 
 .fs-3 {
@@ -11067,10 +11062,6 @@ textarea.form-control-lg {
     font-size: 2.5rem !important;
   }
 
-  .fs-2 {
-    font-size: 2rem !important;
-  }
-
   .fs-3 {
     font-size: 1.75rem !important;
   }
@@ -11179,6 +11170,38 @@ li {
 
 .cross_icon {
   padding: 1rem;
+}
+
+#cards-recipes {
+  margin-top: 1rem;
+}
+#cards-recipes .card {
+  cursor: pointer;
+  margin: 1rem 0;
+  height: 15rem;
+  background-color: #E7E7E7;
+}
+#cards-recipes .card .card-img-top {
+  height: 250%;
+  background-color: #C7BEBE;
+}
+#cards-recipes .card .card-body {
+  overflow: scroll;
+}
+#cards-recipes .card .card-body h2, #cards-recipes .card .card-body .h2 {
+  size: 16px;
+  color: black;
+}
+#cards-recipes .card .card-body .description_recipes {
+  height: 10rem;
+  width: 55%;
+  padding: 0.5rem;
+  overflow: scroll;
+  font-size: 12px;
+}
+
+.dropdown-menu {
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */
