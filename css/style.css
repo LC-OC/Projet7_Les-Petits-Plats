@@ -11131,6 +11131,10 @@ textarea.form-control-lg {
   display: none;
 }
 
+.btn {
+  margin-right: 0.5rem;
+}
+
 .badge {
   display: none;
   background-color: #3282F7;
@@ -11172,17 +11176,26 @@ li {
   padding: 1rem;
 }
 
+#search_ingredients {
+  background-color: #3282F7;
+  color: white;
+}
+#search_ingredients ::placeholder {
+  color: white;
+  opacity: 1;
+}
+
 #cards-recipes {
   margin-top: 1rem;
 }
 #cards-recipes .card {
   cursor: pointer;
   margin: 1rem 0;
-  height: 15rem;
+  height: 25rem;
   background-color: #E7E7E7;
 }
 #cards-recipes .card .card-img-top {
-  height: 250%;
+  height: 25rem;
   background-color: #C7BEBE;
 }
 #cards-recipes .card .card-body {
@@ -11193,15 +11206,57 @@ li {
   color: black;
 }
 #cards-recipes .card .card-body .description_recipes {
-  height: 10rem;
-  width: 55%;
-  padding: 0.5rem;
-  overflow: scroll;
   font-size: 12px;
+  padding-left: 4rem;
+}
+#cards-recipes .card .card-body .appareils_recipes {
+  display: none;
+}
+#cards-recipes .card .card-body .ustensils_recipes {
+  display: none;
+}
+#cards-recipes .card .card-body .ingredients_recipes {
+  font-size: 12px;
+}
+#cards-recipes .card .card-body .title_recipes {
+  width: 70%;
 }
 
 .dropdown-menu {
   color: white;
+}
+
+#dropdown {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+#tag {
+  text-transform: capitalize;
+}
+
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.style_title_time {
+  display: flex;
+  justify-content: space-between;
+}
+.style_title_time .time_recipes {
+  font-weight: bold;
+}
+.style_title_time h2, .style_title_time .h2 {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.style_description_ingredients {
+  display: flex;
+  justify-content: space-between;
 }
 
 /*# sourceMappingURL=style.css.map */

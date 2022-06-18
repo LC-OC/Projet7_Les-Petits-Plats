@@ -1,7 +1,7 @@
 // DOM
-
 const searchBar = document.getElementById('search-content');
 const divCards = document.getElementById('cards-recipes');
+const searchElements = document.getElementsByClassName('col-4');
 const buttonAppareils = document.getElementById('button-appareils');
 const buttonUstensiles = document.getElementById('button-ustensiles');
 const buttonIngredients = document.getElementById('button-ingredients');
@@ -12,9 +12,15 @@ const searchBarUstensiles = document.getElementById('search_ustensiles');
 const dropdownAppareils = document.getElementById('dropdown_appareils');
 const dropdownUstensiles = document.getElementById('dropdown_ustensiles');
 const tagDiv = document.getElementById('tag');
-const errorMessage = document.getElementById('error');
+const divListIngredients = document.getElementById('list_ingredient');
+const errorIngredients = document.getElementById('error_ingredient');
+const divListUstensils = document.getElementById('list_ustensils');
+const divListAppareils = document.getElementById('list_appareil');
+const errorSearch = document.getElementById('error');
+const errorUstensils = document.getElementById('error_ustensils');
+const errorAppareils = document.getElementById('error_appareil');
 
-console.log(errorMessage)
+
 
 // Color button
 buttonAppareils.style.backgroundColor = "#68D9A4";
@@ -43,13 +49,14 @@ let arrayUstensiles = [];
 const loadRecipes = () => {
     displayRecipes(recipes)
 }
-
 const displayRecipes = (recipes) => {
     const htmlString = recipes.map((recipe) => {
         const nameRecipes = recipe.name;
         const timeRecipes = recipe.time;
         const descriptionRecipes = recipe.description;
         const ingredientsRecipes = recipe.ingredients;
+        const appareilsRecipes = recipe.appliance;
+        const ustensilsRecipes = recipe.ustensils;
         const ingredientsList = ingredientsRecipes.map((ingredients) => {
             let ingredientsRecipe = ingredients.ingredient + ':';
             const quantityIngredients = ingredients.quantity;
@@ -80,10 +87,21 @@ const displayRecipes = (recipes) => {
             <div class="card">
                 <img class="card-img-top"/>
                 <div class="card-body">
+                <div class="style_title_time">
                     <h2 class="title_recipes">${nameRecipes}</h2>
                     <p class="time_recipes"><i class="far fa-clock"></i> ${timeRecipes} min</p>
-                    ${ingredientsList}
-                    <p class="description_recipes">${descriptionRecipes}</p>
+                </div>
+                <div class="style_description_ingredients">
+                    <div>
+                        ${ingredientsList}
+                    </div>
+                    <div>
+                        <p class="description_recipes">${descriptionRecipes}</p>
+                    </div>
+                    
+                </div>
+                    <p class="appareils_recipes">${appareilsRecipes}</p>
+                    <p class="ustensils_recipes">${ustensilsRecipes}</p>
                     
                 </div>
             </div>
@@ -92,7 +110,6 @@ const displayRecipes = (recipes) => {
     .join('');
     divCards.innerHTML = htmlString;
 };
-
 loadRecipes()
 
 // recherche barre principale
@@ -102,17 +119,25 @@ searchBar.addEventListener('keyup', e => {
     const searchBarTest = searchBarValue.length;
     let matchFound = false;
     const filteredRecipes = recipes.filter(recipe => {
+        if (recipe.name.includes(searchBarValue) || recipe.description.toLowerCase().includes(searchBarValue) ) {
+            matchFound = true;
+        } 
+        if (!matchFound) {
+            errorSearch.style.display = "block";
+        } else {
+            errorSearch.style.display = "none";
+        }
         if (searchBarTest >= 3) {
             return(
             recipe.name.toLowerCase().includes(searchBarValue) ||
-            recipe.description.toLowerCase().includes(searchBarValue) 
+            recipe.description.toLowerCase().includes(searchBarValue)
         );
         } else {
             return(
                 recipe
             )
         }
-    });
+    }); 
     displayRecipes(filteredRecipes);
     
 });
@@ -124,38 +149,62 @@ const getIngredients = recipes.flatMap(
         o => o.ingredient
     )
 );
-
 getIngredients.forEach((c) => {
     if(!arrayIngredients.includes(c)) {
         arrayIngredients.push(c)
     }
 })
-arrayIngredients.forEach(function(index) {
-    const listIngredients = document.createElement('li');
-    listIngredients.innerHTML = index;
-    dropDownIngredients.appendChild(listIngredients)
-    listIngredients.onclick = function() {
-        let contentIngredients = listIngredients.textContent;
-        let badgeIngredients = document.createElement('span');
-        tagDiv.appendChild(badgeIngredients);
-        badgeIngredients.classList.add("badge");
-        badgeIngredients.style.cursor = "pointer";
-        badgeIngredients.innerHTML = contentIngredients;
-        const ingredientsTags = [...document.querySelectorAll('.badge')];
-         const textIngredients = new Set(ingredientsTags.map(x => x.innerHTML));
-         ingredientsTags.forEach(ingredientsTag => {
-            if(textIngredients.has(ingredientsTag.innerHTML)) {
-             textIngredients.delete(ingredientsTag.innerHTML);
-            } else {
-             ingredientsTag.remove()
-            }
-         })
-        badgeIngredients.style.display = "inline-block";
-        badgeIngredients.addEventListener('click', function() {
-                this.remove();
-          })
-    }
+let newArrayIngredients = arrayIngredients.map(function(obj) {
+    return {ingredient: obj}
 })
+const loadIngredients = () => {
+    displayIngredients(newArrayIngredients)
+}
+const displayIngredients = (newArrayIngredients) => {
+    const htmlString = newArrayIngredients.map((newArrayIngredient) => {
+        const ingredientList = newArrayIngredient.ingredient;
+        return `
+        <li class="ingredients">${ingredientList}</li>`;
+    })
+    .join('');
+    divListIngredients.innerHTML = htmlString;
+    let liIngredients = document.getElementsByClassName('ingredients');
+    for (let liIngredient of liIngredients) {
+       liIngredient.addEventListener('click', function() {
+        let contentIngredients = liIngredient.textContent;
+        let badgeIngredients = document.createElement('span');
+        badgeIngredients.style.backgroundColor = "#3282F7";
+        tagDiv.appendChild(badgeIngredients);
+        badgeIngredients.style.cursor = "pointer";
+        badgeIngredients.classList.add("badge");
+        badgeIngredients.innerHTML = contentIngredients;
+        badgeIngredients.style.display = "inline-block";
+        let testIcon = document.createElement('span');
+        testIcon.innerHTML = '<i class="far fa-times-circle"></i>';
+        const ingredientsTags = [...document.querySelectorAll('.badge')];
+        const textIngredients = new Set(ingredientsTags.map(x => x.innerHTML));
+        ingredientsTags.forEach(ingredientTag => {
+           if(textIngredients.has(ingredientTag.innerHTML)) {
+            textIngredients.delete(ingredientTag.innerHTML);
+           } else {
+            ingredientTag.remove()
+           }
+        })
+        for (let searchElement of searchElements) {
+            if (!searchElement.innerHTML.includes(badgeIngredients.textContent)) {
+                searchElement.style.display = "none";
+            }
+            badgeIngredients.addEventListener('click', function() {
+                if (!searchElement.innerHTML.includes(this.textContent)) {
+                    searchElement.style.display = "block";
+                    this.remove();
+                    tagDiv.textContent = "";
+                }
+            })
+        }
+    }); 
+}}
+loadIngredients()
 
 // ------
 const getUstensils = recipes.flatMap(
@@ -166,34 +215,61 @@ getUstensils.forEach((c) => {
         arrayUstensiles.push(c)
     }
 })
-arrayUstensiles.forEach(function(index) {
-    const listUstensils = document.createElement('li');
-    listUstensils.innerHTML = index;
-    dropdownUstensiles.appendChild(listUstensils)
-    listUstensils.onclick = function() {
-        let contentUstensils = listUstensils.textContent;
-        contentUstensils = contentUstensils.toLowerCase();
+let newArrayUstensiles = arrayUstensiles.map(function(obj) {
+    return {ustensils: obj}
+})
+const loadUstensils = () => {
+    displayUstensils(newArrayUstensiles)
+}
+const displayUstensils = (newArrayUstensiles) => {
+    const htmlString = newArrayUstensiles.map((newArrayUstensile) => {
+        const ustensilsList = newArrayUstensile.ustensils;
+        return `
+        <li class="ustensils">${ustensilsList}</li>`;
+    })
+    .join('');
+    divListUstensils.innerHTML = htmlString;
+    let liUstensils = document.getElementsByClassName('ustensils');
+    for (let liUstensil of liUstensils) {
+       liUstensil.addEventListener('click', function() {
+        let contentUstensils = liUstensil.textContent;
         let badgeUstensils = document.createElement('span');
-        badgeUstensils.style.backgroundColor = "#ED6454"
+        badgeUstensils.style.backgroundColor = "#ED6454";
         tagDiv.appendChild(badgeUstensils);
+        badgeUstensils.style.cursor = "pointer";
         badgeUstensils.classList.add("badge");
         badgeUstensils.innerHTML = contentUstensils;
-        badgeUstensils.style.cursor = "pointer";
         badgeUstensils.style.display = "inline-block";
+        let testIcon = document.createElement('span');
+        testIcon.innerHTML = '<i class="far fa-times-circle"></i>';
         const ustensilsTags = [...document.querySelectorAll('.badge')];
         const textUstensils = new Set(ustensilsTags.map(x => x.innerHTML));
-        ustensilsTags.forEach(ustensilsTag => {
-           if(textUstensils.has(ustensilsTag.innerHTML)) {
-            textUstensils.delete(ustensilsTag.innerHTML);
+        ustensilsTags.forEach(ustensilTag => {
+           if(textUstensils.has(ustensilTag.innerHTML)) {
+            textUstensils.delete(ustensilTag.innerHTML);
            } else {
-            ustensilsTag.remove()
+            ustensilTag.remove()
            }
         })
-        badgeUstensils.addEventListener('click', function() {
-                this.remove();
-          })}
-        
-})
+        for (let searchElement of searchElements) {
+            if (!searchElement.innerHTML.includes(badgeUstensils.textContent)) {
+                searchElement.style.display = "none";
+            }
+            badgeUstensils.addEventListener('click', function() {
+                if (!searchElement.innerHTML.includes(this.textContent)) {
+                    searchElement.style.display = "block";
+                    this.remove();
+                    tagDiv.textContent = "";
+                }
+            })
+        }
+    
+    }); 
+
+}
+    
+};
+loadUstensils()
 
 // ------
 const getAppareils = recipes.flatMap(
@@ -204,36 +280,120 @@ if(!arrayAppareils.includes(c)) {
     arrayAppareils.push(c)
 }
 })
-arrayAppareils.forEach(function(index) {
-const listAppareils = document.createElement('li');
-listAppareils.innerHTML = index;
-dropdownAppareils.appendChild(listAppareils)
-listAppareils.onclick = function() {
-    let contentAppareils = listAppareils.textContent;
-    contentAppareils = contentAppareils.toLowerCase();
-    let badgeAppareils = document.createElement('span');
-    badgeAppareils.style.backgroundColor = "#68D9A4";
-    console.log(contentAppareils)
-    tagDiv.appendChild(badgeAppareils);
-    badgeAppareils.style.cursor = "pointer";
-    badgeAppareils.classList.add("badge");
-    badgeAppareils.innerHTML = contentAppareils;
-    badgeAppareils.style.display = "inline-block";
-    let testIcon = document.createElement('span');
-    testIcon.innerHTML = '<i class="far fa-times-circle"></i>';
-    const appareilsTags = [...document.querySelectorAll('.badge')];
-    const textAppareils = new Set(appareilsTags.map(x => x.innerHTML));
-    appareilsTags.forEach(appareilsTag => {
-       if(textAppareils.has(appareilsTag.innerHTML)) {
-        textAppareils.delete(appareilsTag.innerHTML);
-       } else {
-        appareilsTag.remove()
-       }
-    })
-    badgeAppareils.addEventListener('click', function() {
-            this.remove();
-    })     
-}
+let newArrayAppareils = arrayAppareils.map(function(obj) {
+    return {appareils: obj}
 })
+const loadAppareils = () => {
+    displayAppareils(newArrayAppareils)
+}
+const displayAppareils = (newArrayAppareils) => {
+    const htmlString = newArrayAppareils.map((newArrayAppareil) => {
+        const appareilsList = newArrayAppareil.appareils;
+        return `
+        <li class="appareils">${appareilsList}</li>`;
+    })
+    .join('');
+    divListAppareils.innerHTML = htmlString;
+    let liAppareils = document.getElementsByClassName('appareils');
+    for (let liAppareil of liAppareils) {
+        liAppareil.addEventListener('click', function() {
+        let contentAppareils = liAppareil.textContent;
+        let badgeAppareils = document.createElement('span');
+        badgeAppareils.style.backgroundColor = "#68D9A4";
+        tagDiv.appendChild(badgeAppareils);
+        badgeAppareils.style.cursor = "pointer";
+        badgeAppareils.classList.add("badge");
+        badgeAppareils.innerHTML = contentAppareils;
+        badgeAppareils.style.display = "inline-block";
+        let testIcon = document.createElement('span');
+        testIcon.innerHTML = '<i class="far fa-times-circle"></i>';
+        const appareilsTags = [...document.querySelectorAll('.badge')];
+        const textAppareil = new Set(appareilsTags.map(x => x.innerHTML));
+        appareilsTags.forEach(appareilTag => {
+           if(textAppareil.has(appareilTag.innerHTML)) {
+            textAppareil.delete(appareilTag.innerHTML);
+           } else {
+            appareilTag.remove()
+           }
+        })
+        for (let searchElement of searchElements) {
+            if (!searchElement.innerHTML.includes(badgeAppareils.textContent)) {
+                searchElement.style.display = "none";
+            }
+            badgeAppareils.addEventListener('click', function() {
+                if (!searchElement.innerHTML.includes(this.textContent)) {
+                    searchElement.style.display = "block";
+                    this.remove();
+                    tagDiv.textContent = "";
+                }
+            })
+        }
+    
+    }); 
+
+}
+};
+loadAppareils()
 
 // recherche barre filtres
+
+searchBarIngredients.addEventListener('keyup', e => {
+    const searchBarValue = e.target.value;
+    let matchFound = false;
+    const filteredIngredients = newArrayIngredients.filter(newArrayIngredient => {
+        if (newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue) ) {
+            matchFound = true;
+        } 
+        if (!matchFound) {
+            errorIngredients.style.display = "block";
+        } else {
+            errorIngredients.style.display = "none";
+        }
+       
+            return(
+            newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue) 
+        );
+    });
+    displayIngredients(filteredIngredients);
+});
+
+searchBarUstensiles.addEventListener('keyup', e => {
+    const searchBarValue = e.target.value;
+    let matchFound = false;
+    const filteredUstensils = newArrayUstensiles.filter(newArrayUstensile => {
+        if (newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue) ) {
+            matchFound = true;
+        };
+        if (!matchFound) {
+            errorUstensils.style.display = "block";
+        } else {
+            errorUstensils.style.display = "none";
+        };
+       
+            return(
+            newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue) 
+        );
+    }); 
+    displayUstensils(filteredUstensils);
+});
+
+searchBarAppareils.addEventListener('keyup', e => {
+    const searchBarValue = e.target.value;
+    let matchFound = false;
+    const filteredAppareils = newArrayAppareils.filter(newArrayAppareil => {
+        if (newArrayAppareil.appareils.toLowerCase().includes(searchBarValue) ) {
+            matchFound = true;
+        };
+        if (!matchFound) {
+            errorAppareils.style.display = "block";
+        } else {
+            errorAppareils.style.display = "none";
+        };
+       
+            return(
+            newArrayAppareil.appareils.toLowerCase().includes(searchBarValue) 
+        );
+    }); 
+    displayAppareils(filteredAppareils);
+});
+

@@ -23,7 +23,9 @@
         display: none;
     }
 
-    
+.btn {
+    margin-right: 0.5rem;
+}
 
 .badge {
     display: none;
@@ -67,3 +69,13 @@ li {
 .cross_icon {
     padding: 1rem;
 }
+
+#search_ingredients {
+    background-color: #3282F7;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
+
