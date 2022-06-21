@@ -1,12 +1,17 @@
-
-#header-flex {
-    #logo-div {
-    width: 2rem;
-}
-
-#site_name {
-    width: 15rem;
-}
+header {
+    margin-top: 1.5rem;
+    #logo {
+        height: 2rem;
+        display: block;
+        margin: auto;
+        margin-bottom: 0.5rem;
+    } 
+    
+    #site_name {
+        width: 11rem;
+        display: block;
+        margin: auto;
+    }
 }
 
 #search-content {

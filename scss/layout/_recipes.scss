@@ -1,0 +1,62 @@
+#cards-recipes {
+    margin-top: 1rem;
+    .card {
+        cursor: pointer;
+        margin: 1rem 0;
+        height: 29rem;
+        border-radius: 3px;
+        background-color: #E7E7E7;
+        .card-img-top {
+            height: 50%;
+            background-color: #C7BEBE;
+            width: 100%;
+
+        }
+        .card-body {
+            height: 50%;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            .style_title_time {
+                display: flex;
+                justify-content: space-between;
+                .time_recipes {
+                    font-weight: bold;
+                }
+                h2 {
+                    font-weight: 500;
+                    font-size: 18px;
+                    color: black;
+                }
+            }
+            
+            .style_description_ingredients {
+                display: flex;
+                justify-content: space-between;
+                font-size: 10px;
+                flex-basis: 100%;
+                overflow: hidden;
+            }
+            .description_recipes {
+                display: block;
+                text-overflow: ellipsis;     
+                margin-left: 1rem;         
+            }
+            .appareils_recipes {
+                display: none;
+            }
+            .ustensils_recipes {
+                display: none;
+            }
+            .ingredients_recipes {
+                width: 8rem;
+                .get_ingredient {
+                    font-weight: bold;
+                }
+            }
+            .title_recipes {
+                width: 70%;
+            }
+        }
+    }
+}

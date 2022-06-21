@@ -11,14 +11,13 @@
     <title>Les Petits Plats</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row" id="header">
-            <div class="col" id="header-flex">
-                <img src="./assets/header/icon_chef_hat.png" id="logo" alt="Icon du site, en forme de toque.">
-                <br>
+    <div class="container-fluid">
+            <header>
+                <div id="flex-header">
+                <img src="./assets/header/icon_chef_hat.png" id="logo" alt="Nom et icon du site, en forme de toque.">
                 <img src="./assets/header/les_petits_plats_title.png" id="site_name" alt="Nom du site - 'Les petits plats">
-            </div>
-        </div>
+                </div>
+            </header>
         <div class="row mt-3 mb-3" id="search-bar">
             <form class="form-inline">
                 <input class="form-control bg-light" id="search-content" type="text" placeholder="Rechercher une recette"
@@ -29,17 +28,18 @@
            <div class="col taag" id="tag"></div>
         </div>
         <div class="row" id="dropdown">
-            <div class="col">
+            <div class="col ">
                 <div class="btn-group">
                     <button type="button" id="button-ingredients" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Ingrédients
                     </button>
-                    <ul class="dropdown-menu col-3" id="ingredients-dropdown">
+                    <ul class="dropdown-menu" id="ingredients-dropdown">
                         <form class="form-inline m-1">
                             <input class="form-control mr-sm-2" id="search_ingredients" type="search" 
                             placeholder="Rechercher un ingrédient" aria-label="Search" autocomplete="off">
                           </form>
                           <p id="error_ingredient">Aucun ingrédient ne correspond à votre recherche.</p>
+                          <div id="list_ingredient"></div>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -52,6 +52,7 @@
                             placeholder="Rechercher un appareil" aria-label="Search" autocomplete="off">
                           </form>
                           <p id="error_appareil">Aucun appareil ne correspond à votre recherche.</p>
+                          <div id="list_appareil"></div>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -64,14 +65,18 @@
                             placeholder="Rechercher un ustensile" aria-label="Search" autocomplete="off">
                           </form>
                           <p id="error_ustensils">Aucun ustensile ne correspond à votre recherche.</p>
+                          <div id="list_ustensils"></div>
+                          
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="row" id="cards-recipes">
+        <div class="row" id="cards-recipes"></div>
+        <div id="error_message">
             <p id="error">Aucune recette ne correspond à votre critère… vous pouvez
-                chercher « tarte aux pommes », « poisson », etc...</p>
+        chercher « tarte aux pommes », « poisson », etc...</p>
         </div>
+        
     </div>
 
     <!--Scripts JS-->
