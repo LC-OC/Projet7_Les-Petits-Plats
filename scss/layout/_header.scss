@@ -1,13 +1,20 @@
-
-#header-flex {
-    #logo-div {
-    width: 2rem;
+header {
+    margin-top: 1.5rem;
+    #logo {
+        height: 2rem;
+        display: block;
+        margin: auto;
+        margin-bottom: 0.5rem;
+    } 
+    
+    #site_name {
+        width: 11rem;
+        display: block;
+        margin: auto;
+    }
 }
 
-#site_name {
-    width: 15rem;
-}
-}
+
 
 #search-content {
     background-image: url('../assets/search.png');
@@ -21,6 +28,7 @@
 
     #error {
         display: none;
+        padding: 1rem;
     }
 
 .btn {
@@ -49,20 +57,31 @@
 #error_appareil {
     display: none;
     color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
+    
 }
 
 #error_ingredient {
     display: none;
     color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
 }
 
 #error_ustensils {
     display: none;
     color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
 }
 
 li {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 15px;
 
 }
 
@@ -79,3 +98,24 @@ li {
     }
 }
 
+#search_appareils {
+    background-color: #68D9A4;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
+
+#search_ustensiles {
+    background-color: #ED6454;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
+
+.container-fluid {
+   padding: 0 3rem;
+}

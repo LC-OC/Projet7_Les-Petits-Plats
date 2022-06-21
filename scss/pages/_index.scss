@@ -1,0 +1,39 @@
+.dropdown-menu {
+    color: white;
+}
+
+#dropdown {
+    cursor: pointer;
+    text-transform: capitalize;
+    ::placeholder {
+        color: white;
+    }
+}
+
+#tag {
+    text-transform: capitalize;
+}
+
+#list_ingredient {
+    display: flex;
+    flex-wrap: wrap;
+    .ingredients {
+        width: 15rem;
+    }  
+}
+
+#list_ustensils {
+    display: flex;
+    flex-wrap: wrap;
+    .ustensils {
+        width: 15rem;
+    }  
+}
+
+#list_appareil {
+    display: flex;
+    flex-wrap: wrap;
+    .appareils {
+        width: 15rem;
+    }  
+}

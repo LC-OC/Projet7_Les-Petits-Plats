@@ -78,7 +78,7 @@ const displayRecipes = (recipes) => {
                 ingredientsRecipe = ingredients.ingredient;
             }
             return `
-            <p class="ingredients_recipes">${ingredientsRecipe} ${quantity} ${unit}</p>
+            <p class="ingredients_recipes"><span class="get_ingredient">${ingredientsRecipe}</span> ${quantity} ${unit}</p>
             `
         })
         .join('');
@@ -129,8 +129,9 @@ searchBar.addEventListener('keyup', e => {
         }
         if (searchBarTest >= 3) {
             return(
-            recipe.name.toLowerCase().includes(searchBarValue) ||
-            recipe.description.toLowerCase().includes(searchBarValue)
+            recipe.name.toLowerCase().includes(searchBarValue.toLowerCase()) ||
+            recipe.description.toLowerCase().includes(searchBarValue.toLowerCase())
+            
         );
         } else {
             return(
@@ -255,6 +256,7 @@ const displayUstensils = (newArrayUstensiles) => {
             if (!searchElement.innerHTML.includes(badgeUstensils.textContent)) {
                 searchElement.style.display = "none";
             }
+            
             badgeUstensils.addEventListener('click', function() {
                 if (!searchElement.innerHTML.includes(this.textContent)) {
                     searchElement.style.display = "block";
@@ -295,6 +297,7 @@ const displayAppareils = (newArrayAppareils) => {
     .join('');
     divListAppareils.innerHTML = htmlString;
     let liAppareils = document.getElementsByClassName('appareils');
+    
     for (let liAppareil of liAppareils) {
         liAppareil.addEventListener('click', function() {
         let contentAppareils = liAppareil.textContent;
@@ -320,6 +323,7 @@ const displayAppareils = (newArrayAppareils) => {
             if (!searchElement.innerHTML.includes(badgeAppareils.textContent)) {
                 searchElement.style.display = "none";
             }
+            
             badgeAppareils.addEventListener('click', function() {
                 if (!searchElement.innerHTML.includes(this.textContent)) {
                     searchElement.style.display = "block";
@@ -341,7 +345,7 @@ searchBarIngredients.addEventListener('keyup', e => {
     const searchBarValue = e.target.value;
     let matchFound = false;
     const filteredIngredients = newArrayIngredients.filter(newArrayIngredient => {
-        if (newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue) ) {
+        if (newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue.toLowerCase()) ) {
             matchFound = true;
         } 
         if (!matchFound) {
@@ -351,7 +355,7 @@ searchBarIngredients.addEventListener('keyup', e => {
         }
        
             return(
-            newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue) 
+            newArrayIngredient.ingredient.toLowerCase().includes(searchBarValue.toLowerCase()) 
         );
     });
     displayIngredients(filteredIngredients);
@@ -361,7 +365,7 @@ searchBarUstensiles.addEventListener('keyup', e => {
     const searchBarValue = e.target.value;
     let matchFound = false;
     const filteredUstensils = newArrayUstensiles.filter(newArrayUstensile => {
-        if (newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue) ) {
+        if (newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue.toLowerCase()) ) {
             matchFound = true;
         };
         if (!matchFound) {
@@ -371,7 +375,7 @@ searchBarUstensiles.addEventListener('keyup', e => {
         };
        
             return(
-            newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue) 
+            newArrayUstensile.ustensils.toLowerCase().includes(searchBarValue.toLowerCase()) 
         );
     }); 
     displayUstensils(filteredUstensils);
@@ -381,7 +385,7 @@ searchBarAppareils.addEventListener('keyup', e => {
     const searchBarValue = e.target.value;
     let matchFound = false;
     const filteredAppareils = newArrayAppareils.filter(newArrayAppareil => {
-        if (newArrayAppareil.appareils.toLowerCase().includes(searchBarValue) ) {
+        if (newArrayAppareil.appareils.toLowerCase().includes(searchBarValue.toLowerCase())) {
             matchFound = true;
         };
         if (!matchFound) {
@@ -391,9 +395,12 @@ searchBarAppareils.addEventListener('keyup', e => {
         };
        
             return(
-            newArrayAppareil.appareils.toLowerCase().includes(searchBarValue) 
+            newArrayAppareil.appareils.toLowerCase().includes(searchBarValue.toLowerCase()) 
         );
     }); 
     displayAppareils(filteredAppareils);
 });
+
+// 
+
 
