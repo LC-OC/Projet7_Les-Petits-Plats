@@ -20,13 +20,15 @@
             .style_title_time {
                 display: flex;
                 justify-content: space-between;
+                padding-bottom: 1rem;
                 .time_recipes {
                     font-weight: bold;
                 }
-                h2 {
+                #search_title {
                     font-weight: 500;
                     font-size: 18px;
                     color: black;
+                    width: 60%;
                 }
             }
             

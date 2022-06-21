@@ -12,6 +12,9 @@ const searchBarUstensiles = document.getElementById('search_ustensiles');
 const dropdownAppareils = document.getElementById('dropdown_appareils');
 const dropdownUstensiles = document.getElementById('dropdown_ustensiles');
 const tagDiv = document.getElementById('tag');
+const divListIngredients = document.getElementById('list_ingredient');
+const divListUstensils = document.getElementById('list_ustensils');
+const divListAppareils = document.getElementById('list_appareil');
 
 
 // Color button
@@ -45,36 +48,31 @@ for (let i = 0; i < recipes.length; i++) {
     let cardsRecipes = document.createElement('div');
     cardsRecipes.classList.add('card');
     cardsRecipes.style.cursor = "pointer";
-    cardsRecipes.style.margin = '1rem 0';
-    cardsRecipes.style.height = '15rem';
-    cardsRecipes.style.backgroundColor = "#E7E7E7";
     let imgCardsRecipes = document.createElement('img');
     imgCardsRecipes.classList.add('card-img-top');
-    imgCardsRecipes.style.height = "250%";
-    imgCardsRecipes.style.backgroundColor = "#C7BEBE";
     let cardsRecipesBody = document.createElement('div');
     cardsRecipesBody.classList.add('card-body');
-    cardsRecipesBody.style.overflow = "scroll";
+    let cardsTimeTitle = document.createElement('div');
+    cardsRecipesBody.appendChild(cardsTimeTitle);
+    cardsTimeTitle.classList.add('style_title_time');
     let cardsRecipesTitle = document.createElement('h2');
     cardsRecipesTitle.setAttribute('id', 'search_title')
-    cardsRecipesTitle.style.fontSize = "16px";
-    cardsRecipesTitle.style.color = "black";
     let cardsRecipesTime = document.createElement('p');
     cardsRecipesTitle.innerText = recipes[i].name;
-    cardsRecipesTime.classList.add('card-text');
+    cardsRecipesTime.classList.add('card-text', 'time_recipes');
     cardsRecipesTime.innerHTML = '<i class="far fa-clock"></i> ' + recipes[i].time + ' min';
+    cardsTimeTitle.appendChild(cardsRecipesTitle);
+    cardsTimeTitle.appendChild(cardsRecipesTime);
+    let cardsIngredientsDescription = document.createElement('div');
+    cardsIngredientsDescription.classList.add('style_description_ingredients');
+    cardsRecipesBody.appendChild(cardsIngredientsDescription);
     let cardsRecipesDescriptions = document.createElement('p');
     cardsRecipesDescriptions.innerText = recipes[i].description;
-    cardsRecipesDescriptions.style.fontSize = "12px";
-    cardsRecipesDescriptions.style.width = "60%";
-    cardsRecipesDescriptions.style.height = "10rem";
     //cardsRecipesDescriptions.style.textOverflow = "ellipsis";
     divCards.appendChild(cardsCols);
     cardsCols.appendChild(cardsRecipes);
     cardsRecipes.appendChild(imgCardsRecipes);
     cardsRecipes.appendChild(cardsRecipesBody);
-    cardsRecipesBody.appendChild(cardsRecipesTitle);
-    cardsRecipesBody.appendChild(cardsRecipesTime);
     let ingredients = recipes[i].ingredients;
     let appareils = recipes[i].appliance;
     let appareilsPart = document.createElement('p');
@@ -88,6 +86,7 @@ for (let i = 0; i < recipes.length; i++) {
     ustensilsPart.style.display = "none";
     arrayAppareils.push(appareils);
     arrayUstensiles.push(ustensiles);
+    let divIngredients = document.createElement('div');
     for (let y = 0; y < ingredients.length; y++) {
         let ingredientListTes = document.createElement('p');
         ingredientListTes.innerHTML = ingredients[y].ingredient;
@@ -98,6 +97,8 @@ for (let i = 0; i < recipes.length; i++) {
         let ingredientQuantity = ingredients[y].quantity;
         let ingredientUnit = ingredients[y].unit;
         let cardsRecipesIngredients = document.createElement('p');
+        cardsRecipesIngredients.classList.add('ingredients_recipes');
+        divIngredients.appendChild(cardsRecipesIngredients);
         if (ingredientUnit == undefined) {
             cardsRecipesIngredients.innerText = ingredientName + ': ' + ingredientQuantity;
         }
@@ -110,11 +111,14 @@ for (let i = 0; i < recipes.length; i++) {
         if (ingredientQuantity == undefined) {
             cardsRecipesIngredients.innerText = ingredientName;
         }
-        cardsRecipesBody.appendChild(cardsRecipesIngredients);
+        
         arrayIngredients.push(ingredientName);
 
     }
-    cardsRecipesBody.appendChild(cardsRecipesDescriptions);
+    
+    cardsIngredientsDescription.appendChild(divIngredients);
+    cardsIngredientsDescription.appendChild(cardsRecipesDescriptions);
+    cardsRecipesDescriptions.classList.add('description_recipes');
     function searchRecipes() {
         let inputSearch = searchBar.value;
         inputSearch = inputSearch.toLowerCase();
@@ -138,7 +142,6 @@ for (let i = 0; i < recipes.length; i++) {
     }
     searchBar.onkeyup = function() {
             searchRecipes() 
-        
     }
    
 }
@@ -179,19 +182,19 @@ arrayUstensils.forEach((c) => {
 // Recherche et liste ingrédients
 for (let i = 0; i < filtredArrayIngredients.length; i++) {
     let listIngredients = document.createElement('li');
-    listIngredients.classList.add('list_ingredient');
+    listIngredients.classList.add('ingredients');
     let newListIngredients = filtredArrayIngredients[i];
     listIngredients.innerText = newListIngredients;
     listIngredients.style.cursor = "pointer";
     listIngredients.style.color = "#FFFFFF";
-    dropDownIngredients.appendChild(listIngredients);
+    divListIngredients.appendChild(listIngredients);
     // Search Bar Ingrédients
     function searchIngredients() {
         let inputSearchIngredients = searchBarIngredients.value;
         inputSearchIngredients = inputSearchIngredients.toLowerCase();
         let matchFoundIngredients = false;
         let errorIngredients = document.getElementById('error_ingredient');
-        let searchElementIngredients = document.getElementsByClassName('list_ingredient');
+        let searchElementIngredients = document.getElementsByClassName('ingredients');
         for (let a = 0; a < searchElementIngredients.length; a++) {
             if (!searchElementIngredients[a].innerHTML.toLowerCase().includes(inputSearchIngredients)) {
                 searchElementIngredients[a].style.display = "none";
@@ -206,8 +209,6 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
         } else {
             errorIngredients.style.display = "none";
         }
-
-        
     }
     searchBarIngredients.onkeyup = function() {
         searchIngredients()
@@ -252,19 +253,19 @@ for (let i = 0; i < filtredArrayIngredients.length; i++) {
 // Recherche et liste Appareils
 for (let i = 0; i < filtredArrayAppareils.length; i++) {
     let listAppareils = document.createElement('li');
-    listAppareils.classList.add('list_appareils');
+    listAppareils.classList.add('appareils');
     let newListAppareils = filtredArrayAppareils[i];
     listAppareils.innerText = newListAppareils;
     listAppareils.style.cursor = "pointer";
     listAppareils.style.color = "#FFFFFF";
-    dropdownAppareils.appendChild(listAppareils);
+    divListAppareils.appendChild(listAppareils);
     // Search Bar Appareils
     function searchAppareils() {
         let inputSearchAppareils = searchBarAppareils.value;
         inputSearchAppareils = inputSearchAppareils.toLowerCase();
         let matchFoundAppareils = false;
         let errorAppareils = document.getElementById('error_appareil')
-        let searchElementAppareils = document.getElementsByClassName('list_appareils');
+        let searchElementAppareils = document.getElementsByClassName('appareils');
         for (let a = 0; a < searchElementAppareils.length; a++) {
             if (!searchElementAppareils[a].innerHTML.toLowerCase().includes(inputSearchAppareils)) {
                 searchElementAppareils[a].style.display = "none";
@@ -290,7 +291,6 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
         contentAppareils = contentAppareils.toLowerCase();
         let badgeAppareils = document.createElement('span');
         badgeAppareils.style.backgroundColor = "#68D9A4";
-        console.log(contentAppareils)
         tagDiv.appendChild(badgeAppareils);
         badgeAppareils.style.cursor = "pointer";
         badgeAppareils.classList.add("badge");
@@ -328,20 +328,19 @@ for (let i = 0; i < filtredArrayAppareils.length; i++) {
 
 for (let i = 0; i < filtredArrayUstensils.length; i++) {
     let listUstensils = document.createElement('li');
-    listUstensils.classList.add('list_ustensils');
+    listUstensils.classList.add('ustensils');
     let newListUstensils = filtredArrayUstensils[i];
     listUstensils.innerText = newListUstensils;
     listUstensils.style.color = "#FFFFFF";
     listUstensils.style.cursor = "pointer";
-    dropdownUstensiles.appendChild(listUstensils);
-    
+    divListUstensils.appendChild(listUstensils);
     // Search Bar Ustensiles
     function searchUstensils() {
         let inputSearchUstensils = searchBarUstensiles.value;
         inputSearchUstensils = inputSearchUstensils.toLowerCase();
         let matchFoundUstensils = false;
         let errorUstensils = document.getElementById('error_ustensils');
-        let searchElementUstensils = document.getElementsByClassName('list_ustensils');
+        let searchElementUstensils = document.getElementsByClassName('ustensils');
         for (let a = 0; a < searchElementUstensils.length; a++) {
             if (!searchElementUstensils[a].innerHTML.toLowerCase().includes(inputSearchUstensils)) {
                 searchElementUstensils[a].style.display = "none";
@@ -364,8 +363,7 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
         let contentUstensils = listUstensils.textContent;
         contentUstensils = contentUstensils.toLowerCase();
         let badgeUstensils = document.createElement('span');
-        badgeUstensils.style.backgroundColor = "#ED6454"
-        console.log(contentUstensils)
+        badgeUstensils.style.backgroundColor = "#ED6454";
         tagDiv.appendChild(badgeUstensils);
         badgeUstensils.classList.add("badge");
         badgeUstensils.innerHTML = contentUstensils;
@@ -387,7 +385,6 @@ for (let i = 0; i < filtredArrayUstensils.length; i++) {
          }
          badgeUstensils.addEventListener('click', function() {
             if (!searchElement[b].innerHTML.toLowerCase().includes(this.textContent)) {
-                console.log('bonjour!')
                 searchElement[b].style.display = "block";
                 this.remove();
                 tagDiv.textContent = "";
