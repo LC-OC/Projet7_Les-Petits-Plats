@@ -1,4 +1,7 @@
 @import "variables_overrides";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-@import "./layout/header"
+@import "./layout/header";
+@import "./layout/recipes";
+@import "./layout/search";
+@import "./pages/index"
 
