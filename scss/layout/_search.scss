@@ -7,3 +7,79 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 .form-control {
     border: none;
 }
+
+#search-content {
+    background-image: url('../assets/search.png');
+    background-repeat: no-repeat;
+    background-position: center right 1%;
+    padding: 0.9rem;
+    background-size: 1.9rem;
+    background-origin: padding-box;
+}
+
+#error {
+    display: none;
+    padding: 1rem;
+}
+
+#error_appareil {
+    display: none;
+    color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
+    
+}
+
+#error_ingredient {
+    display: none;
+    color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
+}
+
+#error_ustensils {
+    display: none;
+    color: white;
+    font-size: 12px;
+    padding: 1rem;
+    text-transform: none;
+}
+
+li {
+    padding: 0.5rem 1rem;
+    font-size: 15px;
+
+}
+
+.cross_icon {
+    padding: 1rem;
+}
+
+#search_ingredients {
+    background-color: #3282F7;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
+
+#search_appareils {
+    background-color: #68D9A4;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
+
+#search_ustensiles {
+    background-color: #ED6454;
+    color: white;
+    ::placeholder {
+        color: white;
+        opacity: 1;
+    }
+}
