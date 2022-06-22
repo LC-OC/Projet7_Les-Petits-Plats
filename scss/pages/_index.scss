@@ -17,6 +17,9 @@
 #list_ingredient {
     display: flex;
     flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     .ingredients {
         width: 15rem;
     }  
@@ -25,6 +28,9 @@
 #list_ustensils {
     display: flex;
     flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     .ustensils {
         width: 15rem;
     }  
@@ -33,6 +39,9 @@
 #list_appareil {
     display: flex;
     flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     .appareils {
         width: 15rem;
     }  
@@ -60,9 +69,6 @@
     background-origin: padding-box;
 
 }
-
-
-
 .container-fluid {
    padding: 0 3rem;
 }

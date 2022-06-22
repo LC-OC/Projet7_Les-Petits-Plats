@@ -2201,6 +2201,7 @@ progress {
   background-color: #fff;
   border-color: #86b7fe;
   outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-control::-webkit-date-and-time-value {
   height: 1.5em;
@@ -11198,6 +11199,9 @@ input[type=search]::-webkit-search-results-decoration {
 .form-control {
   border: none;
 }
+.form-control:focus {
+  box-shadow: none;
+}
 
 #search-content {
   background-image: url("../assets/search.png");
@@ -11292,6 +11296,9 @@ li {
 #list_ingredient {
   display: flex;
   flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 #list_ingredient .ingredients {
   width: 15rem;
@@ -11300,6 +11307,9 @@ li {
 #list_ustensils {
   display: flex;
   flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 #list_ustensils .ustensils {
   width: 15rem;
@@ -11308,6 +11318,9 @@ li {
 #list_appareil {
   display: flex;
   flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 #list_appareil .appareils {
   width: 15rem;
