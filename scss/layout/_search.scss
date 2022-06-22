@@ -6,6 +6,9 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 
 .form-control {
     border: none;
+    &:focus {
+        box-shadow: none;
+    }
 }
 
 #search-content {
