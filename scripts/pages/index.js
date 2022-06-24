@@ -147,10 +147,13 @@ searchBar.addEventListener('keyup', e => {
 let cards = document.getElementsByClassName('cardss');
 let lists = document.getElementsByClassName('list');
 
-function majListingSearch() {
+
+// Mise à jour des éléments de la recherche avancée
+searchBar.onkeyup = function() {
+    let value = searchBar.value;
     for (let list of lists) {
         for (let card of cards) {
-           if (!card.textContent.includes(list.textContent)) {
+           if (!card.textContent.includes(list.textContent) && value.length >= 3) {
             list.style.display = "none"
            } else {
             list.style.display = "block";
@@ -159,14 +162,6 @@ function majListingSearch() {
 }
 }
 
-
-// Mise à jour des éléments de la recherche avancée
-searchBar.onkeyup = function() {
-    let value = searchBar.value;
-    if (value.length >= 3) {
-        majListingSearch()
-    }    
-}
 
 // Afficher les listes et retirer doublons
 
@@ -322,10 +317,8 @@ const displayAppareils = (newArrayAppareils) => {
     .join('');
     divListAppareils.innerHTML = htmlString;
     let liAppareils = document.getElementsByClassName('appareils');
-    
     for (let liAppareil of liAppareils) {
         liAppareil.addEventListener('click', function() {
-            majListingSearch()
         let contentAppareils = liAppareil.textContent;
         let badgeAppareils = document.createElement('span');
         badgeAppareils.style.backgroundColor = "#68D9A4";
@@ -345,10 +338,10 @@ const displayAppareils = (newArrayAppareils) => {
             appareilTag.remove()
            }
         })
-        
         for (let searchElement of searchElements) {
             if (!searchElement.innerHTML.includes(badgeAppareils.textContent)) {
                 searchElement.style.display = "none";
+                
             }
             
             badgeAppareils.addEventListener('click', function() {
@@ -359,7 +352,8 @@ const displayAppareils = (newArrayAppareils) => {
                 }
             })
         }
-    }); 
+        
+    });
 }
 };
 loadAppareils()
