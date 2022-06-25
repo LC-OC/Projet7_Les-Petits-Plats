@@ -1,7 +1,7 @@
 // DOM
 const searchBar = document.getElementById('search-content');
 const divCards = document.getElementById('cards-recipes');
-const searchElements = document.getElementsByClassName('col-4');
+let searchElements = document.getElementsByClassName('col-4');
 const buttonAppareils = document.getElementById('button-appareils');
 const buttonUstensiles = document.getElementById('button-ustensiles');
 const buttonIngredients = document.getElementById('button-ingredients');
@@ -215,6 +215,17 @@ const displayIngredients = (newArrayIngredients) => {
             if (!searchElement.innerHTML.includes(badgeIngredients.textContent)) {
                 searchElement.style.display = "none";
             }
+            /*if (searchElement.textContent.includes(liIngredient.textContent)) {
+                console.log(searchElement.textContent)
+                for (let list of lists) {
+                       if (!searchElement.textContent.includes(list.textContent)) {
+                        list.style.display = "none";
+                        
+                    } else {
+                        list.style.display = "block";
+                    }
+                }
+            }*/
             badgeIngredients.addEventListener('click', function() {
                 if (!searchElement.innerHTML.includes(this.textContent)) {
                     searchElement.style.display = "block";
@@ -223,8 +234,11 @@ const displayIngredients = (newArrayIngredients) => {
                 }
             })
         }
+       
     }); 
-}}
+    
+    }
+}
 loadIngredients()
 
 // ------
@@ -276,7 +290,17 @@ const displayUstensils = (newArrayUstensiles) => {
             if (!searchElement.innerHTML.includes(badgeUstensils.textContent)) {
                 searchElement.style.display = "none";
             }
-            
+            /*if (searchElement.textContent.includes(this.textContent)) {
+                console.log(searchElement.textContent)
+                for (let list of lists) {
+                       if (!searchElement.textContent.includes(list.textContent)) {
+                        list.style.display = "none"
+                        console.log(list)
+                    } else {
+                        list.style.display = "block"
+                    }
+                }
+            }*/
             badgeUstensils.addEventListener('click', function() {
                 if (!searchElement.innerHTML.includes(this.textContent)) {
                     searchElement.style.display = "block";
@@ -287,7 +311,6 @@ const displayUstensils = (newArrayUstensiles) => {
         }
     
     }); 
-
 }
     
 };
@@ -343,6 +366,17 @@ const displayAppareils = (newArrayAppareils) => {
                 searchElement.style.display = "none";
                 
             }
+            /*if (searchElement.textContent.includes(this.textContent)) {
+                console.log(searchElement.textContent)
+                for (let list of lists) {
+                       if (!searchElement.textContent.includes(list.textContent)) {
+                        list.style.display = "none"
+                        console.log(list)
+                    } else {
+                        list.style.display = "block"
+                    }
+                }
+            }*/
             
             badgeAppareils.addEventListener('click', function() {
                 if (!searchElement.innerHTML.includes(this.textContent)) {
@@ -351,9 +385,9 @@ const displayAppareils = (newArrayAppareils) => {
                     tagDiv.textContent = "";
                 }
             })
-        }
-        
+        } 
     });
+    
 }
 };
 loadAppareils()
@@ -407,6 +441,7 @@ searchBarAppareils.addEventListener('keyup', e => {
         if (newArrayAppareil.appareils.toLowerCase().includes(searchBarValue.toLowerCase())) {
             matchFound = true;
         };
+
         if (!matchFound) {
             errorAppareils.style.display = "block";
         } else {
@@ -419,4 +454,3 @@ searchBarAppareils.addEventListener('keyup', e => {
     }); 
     displayAppareils(filteredAppareils);
 });
-
