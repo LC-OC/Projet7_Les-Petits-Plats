@@ -11350,4 +11350,12 @@ li {
   padding: 0 3rem;
 }
 
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */
