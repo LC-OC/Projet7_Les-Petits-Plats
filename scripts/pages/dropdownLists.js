@@ -19,8 +19,9 @@ import {
   errorAppareils,
   errorIngredients,
   errorUstensils,
-  cards,
+  searchBar,
   tagDiv,
+  cards,
 } from "./DOM.js";
 
 // Color button
@@ -232,13 +233,70 @@ for (let list of lists) {
       };
     }
   });
-}*/
+}
 
+*/
 let arrayTestAddTag = [];
+let arrayUstensils = [];
+let arrayIngredients = [];
 
 for (let list of lists) {
   list.addEventListener("click", (e) => createTag(e));
   list.addEventListener("click", (e) => searchByTag(e));
+  list.onclick = function () {
+    recipes.forEach((recipe) => {
+      if (
+        recipe.appliance.includes(list.textContent) ||
+        recipe.ustensils.includes(list.textContent)
+      ) {
+        let testIngredient = recipe.ingredients.map((a) => a.ingredient);
+        arrayIngredients.push(testIngredient);
+        arrayTestAddTag.push(recipe.appliance);
+        arrayUstensils.push(recipe.ustensils);
+      }
+    });
+  };
+  list.addEventListener("click", () => triListing());
+}
+
+function triListing() {
+  let newArray = new Set(arrayTestAddTag);
+  // tri ustensils
+  let newArrayUstensils = new Set(arrayUstensils);
+  const arrayagain = [];
+  newArrayUstensils.forEach((fresh) => {
+    fresh.forEach((refresh) => {
+      arrayagain.push(refresh);
+    });
+  });
+  const arrayFilter = new Set(arrayagain);
+  divListUstensils.innerHTML = "";
+  for (let freshed of arrayFilter) {
+    const newList = document.createElement("li");
+    newList.textContent = freshed;
+    divListUstensils.appendChild(newList);
+  }
+  // tri appareils
+  divListAppareils.innerHTML = "";
+  for (let appareil of newArray) {
+    const newListAppareil = document.createElement("li");
+    newListAppareil.textContent = appareil;
+    divListAppareils.appendChild(newListAppareil);
+  }
+  // tri ingrédients
+  const arrayCleanIngredient = [];
+  arrayIngredients.forEach((ingredient) => {
+    ingredient.forEach((getIngredient) => {
+      arrayCleanIngredient.push(getIngredient);
+    });
+  });
+  let uniqueArrayIngredient = new Set(arrayCleanIngredient);
+  divListIngredients.innerHTML = "";
+  for (let listIngredient of uniqueArrayIngredient) {
+    const newListIngredient = document.createElement("li");
+    newListIngredient.textContent = listIngredient;
+    divListIngredients.appendChild(newListIngredient);
+  }
 }
 
 //Creation tag quand on clique sur un élément des dropdown
@@ -266,23 +324,25 @@ function createTag(e) {
       ingredientsTag.remove();
     }
   });
-  for (let searchElement of searchElements) {
-    if (!searchElement.innerHTML.includes(e.target.textContent)) {
-      searchElement.style.display = "none";
-    }
-    arrayTestAddTag.push(badgeIngredients);
-  }
 }
 
-// Suppression du tag
+//Suppression du tag
 for (let tag of testTag) {
   tag.addEventListener("click", (e) => deleteTag(e));
-  tag.addEventListener("click", (e) => test(e));
+  //tag.addEventListener("click", (e) => test(e));
 }
 
 function deleteTag(e) {
   let tag = e.target;
   tag.remove();
+  searchBar.value = "";
+  displayRecipes(recipes);
+  arrayUstensils = [];
+  displayUstentils(filtredArrayUstensils);
+  arrayTestAddTag = [];
+  displayAppliances(filtredArrayAppliance);
+  arrayIngredients = [];
+  displayIngredients(filtredArrayIngredients);
 }
 
 function searchByTag(e) {
@@ -293,27 +353,4 @@ function searchByTag(e) {
       searchElement.style.display = "block";
     }
   }
-}
-
-function test(e) {
-  arrayTestAddTag.forEach((tag) => {
-    if (tag.textContent == e.target.textContent) {
-      console.log(e.target.textContent);
-
-      let teeest = recipes.filter((recipe) => {
-        if (
-          recipe.appliance.includes(tag.textContent) ||
-          recipe.ustensils.includes(tag.textContent)
-        ) {
-          return (
-            recipe.appliance.includes(tag.textContent) ||
-            recipe.ustensils.includes(tag.textContent)
-          );
-        } else {
-          return recipe;
-        }
-      });
-      displayRecipes(teeest);
-    }
-  });
 }

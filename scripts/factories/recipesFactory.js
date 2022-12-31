@@ -51,6 +51,7 @@ export function recipesFactory(data) {
     ustensilsPart.innerHTML = ustensils;
 
     // display ingredients list
+
     ingredients.forEach((ingredient) => {
       let cardsRecipesIngredients = document.createElement("p");
       divIngredients.appendChild(cardsRecipesIngredients);
