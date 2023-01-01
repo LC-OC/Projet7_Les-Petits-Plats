@@ -1,7 +1,8 @@
 let searchElements = document.getElementsByClassName("col-4");
 let testTag = document.getElementsByClassName("taag");
 import { recipes } from "../data/recipes.js";
-import { displayRecipes } from "./displayRecipes.js";
+import { displayRecipes } from "./index.js";
+
 import {
   lists,
   buttonAppareils,
@@ -21,7 +22,6 @@ import {
   errorUstensils,
   searchBar,
   tagDiv,
-  cards,
 } from "./DOM.js";
 
 // Color button
@@ -181,107 +181,63 @@ searchBarUstensiles.addEventListener("keyup", (e) => {
   displayUstentils(filteredUstensils);
 });
 
-/*Search by Tags Test
-
-for (let list of lists) {
-  list.addEventListener("click", () => {
-    let contentIngredients = list.textContent;
-    let badgeIngredients = document.createElement("span");
-    tagDiv.appendChild(badgeIngredients);
-    if (list.classList.contains("ingredients")) {
-      badgeIngredients.style.backgroundColor = "#3282F7";
-    } else if (list.classList.contains("appliance")) {
-      badgeIngredients.style.backgroundColor = "#68D9A4";
-    } else if (list.classList.contains("ustensils")) {
-      badgeIngredients.style.backgroundColor = "#ED6454";
-    }
-    badgeIngredients.classList.add("badge");
-    badgeIngredients.style.cursor = "pointer";
-    badgeIngredients.innerHTML = contentIngredients;
-    badgeIngredients.style.display = "inline-block";
-    // tri pour éviter doublons tags
-    const ingredientsTags = [...document.querySelectorAll(".badge")];
-    const textIngredients = new Set(ingredientsTags.map((x) => x.innerHTML));
-    ingredientsTags.forEach((ingredientsTag) => {
-      if (textIngredients.has(ingredientsTag.innerHTML)) {
-        textIngredients.delete(ingredientsTag.innerHTML);
-      } else {
-        ingredientsTag.remove();
-      }
-    });
-    for (let searchElement of searchElements) {
-      if (!searchElement.innerHTML.includes(list.textContent)) {
-        searchElement.style.display = "none";
-      }
-
-      badgeIngredients.onclick = function () {
-        let teeest = recipes.filter((recipe) => {
-          if (
-            !recipe.appliance.includes(this.textContent) ||
-            !recipe.ustensils.includes(this.textContent)
-          ) {
-            this.remove();
-            return recipe;
-          } else {
-            return (
-              recipe.appliance.includes(this.textContent) ||
-              recipe.ustensils.includes(this.textContent)
-            );
-          }
-        });
-        displayRecipes(teeest);
-      };
-    }
-  });
-}
-
-*/
-let arrayTestAddTag = [];
+let arrayAppliance = [];
 let arrayUstensils = [];
 let arrayIngredients = [];
 
 for (let list of lists) {
   list.addEventListener("click", (e) => createTag(e));
   list.addEventListener("click", (e) => searchByTag(e));
-  list.onclick = function () {
-    recipes.forEach((recipe) => {
-      if (
-        recipe.appliance.includes(list.textContent) ||
-        recipe.ustensils.includes(list.textContent)
-      ) {
-        let testIngredient = recipe.ingredients.map((a) => a.ingredient);
-        arrayIngredients.push(testIngredient);
-        arrayTestAddTag.push(recipe.appliance);
-        arrayUstensils.push(recipe.ustensils);
-      }
-    });
-  };
+  list.addEventListener("click", (e) => getListing(e));
   list.addEventListener("click", () => triListing());
 }
 
+function getListing(e) {
+  recipes.forEach((recipe) => {
+    let getNameIngredient = recipe.ingredients.map((a) => a.ingredient);
+    if (
+      recipe.appliance.includes(e.target.textContent) ||
+      recipe.ustensils.includes(e.target.textContent) ||
+      getNameIngredient.includes(e.target.textContent)
+    ) {
+      arrayIngredients.push(getNameIngredient);
+      arrayAppliance.push(recipe.appliance);
+      arrayUstensils.push(recipe.ustensils);
+    }
+  });
+}
+
 function triListing() {
-  let newArray = new Set(arrayTestAddTag);
+  let newArrayAppliance = new Set(arrayAppliance);
   // tri ustensils
   let newArrayUstensils = new Set(arrayUstensils);
-  const arrayagain = [];
-  newArrayUstensils.forEach((fresh) => {
-    fresh.forEach((refresh) => {
-      arrayagain.push(refresh);
+  const cleanArrayUstensils = [];
+  newArrayUstensils.forEach((getUstensils) => {
+    getUstensils.forEach((getAllUstensils) => {
+      cleanArrayUstensils.push(getAllUstensils);
     });
   });
-  const arrayFilter = new Set(arrayagain);
+  const arrayFilterUstensils = new Set(cleanArrayUstensils);
   divListUstensils.innerHTML = "";
-  for (let freshed of arrayFilter) {
-    const newList = document.createElement("li");
-    newList.textContent = freshed;
-    divListUstensils.appendChild(newList);
+  for (let ustensils of arrayFilterUstensils) {
+    const newListUstensils = document.createElement("li");
+    newListUstensils.textContent = ustensils;
+    divListUstensils.appendChild(newListUstensils);
+    newListUstensils.classList.add("ustensils");
+    newListUstensils.addEventListener("click", (e) => createTag(e));
+    newListUstensils.addEventListener("click", (e) => searchByTag(e));
+    newListUstensils.addEventListener("click", (e) => getListing(e));
   }
   // tri appareils
   divListAppareils.innerHTML = "";
-  for (let appareil of newArray) {
+  for (let appareil of newArrayAppliance) {
     const newListAppareil = document.createElement("li");
     newListAppareil.textContent = appareil;
     divListAppareils.appendChild(newListAppareil);
+    newListAppareil.classList.add("appliance");
+    newListAppareil.addEventListener("click", (e) => createTag(e));
+    newListAppareil.addEventListener("click", (e) => searchByTag(e));
+    newListAppareil.addEventListener("click", (e) => getListing(e));
   }
   // tri ingrédients
   const arrayCleanIngredient = [];
@@ -296,32 +252,35 @@ function triListing() {
     const newListIngredient = document.createElement("li");
     newListIngredient.textContent = listIngredient;
     divListIngredients.appendChild(newListIngredient);
+    newListIngredient.addEventListener("click", (e) => createTag(e));
+    newListIngredient.addEventListener("click", (e) => searchByTag(e));
+    newListIngredient.addEventListener("click", (e) => getListing(e));
   }
 }
 
 //Creation tag quand on clique sur un élément des dropdown
 function createTag(e) {
-  let badgeIngredients = document.createElement("span");
-  tagDiv.appendChild(badgeIngredients);
+  let badge = document.createElement("span");
+  tagDiv.appendChild(badge);
   if (e.target.classList.contains("ingredients")) {
-    badgeIngredients.style.backgroundColor = "#3282F7";
+    badge.style.backgroundColor = "#3282F7";
   } else if (e.target.classList.contains("appliance")) {
-    badgeIngredients.style.backgroundColor = "#68D9A4";
+    badge.style.backgroundColor = "#68D9A4";
   } else if (e.target.classList.contains("ustensils")) {
-    badgeIngredients.style.backgroundColor = "#ED6454";
+    badge.style.backgroundColor = "#ED6454";
   }
-  badgeIngredients.classList.add("badge");
-  badgeIngredients.style.cursor = "pointer";
-  badgeIngredients.innerHTML = e.target.innerHTML;
-  badgeIngredients.style.display = "inline-block";
+  badge.classList.add("badge");
+  badge.style.cursor = "pointer";
+  badge.innerHTML = e.target.innerHTML;
+  badge.style.display = "inline-block";
   // tri pour éviter doublons tags
-  const ingredientsTags = [...document.querySelectorAll(".badge")];
-  const textIngredients = new Set(ingredientsTags.map((x) => x.innerHTML));
-  ingredientsTags.forEach((ingredientsTag) => {
-    if (textIngredients.has(ingredientsTag.innerHTML)) {
-      textIngredients.delete(ingredientsTag.innerHTML);
+  const getTags = [...document.querySelectorAll(".badge")];
+  const contentTag = new Set(getTags.map((x) => x.innerHTML));
+  getTags.forEach((tag) => {
+    if (contentTag.has(tag.innerHTML)) {
+      contentTag.delete(tag.innerHTML);
     } else {
-      ingredientsTag.remove();
+      tag.remove();
     }
   });
 }
@@ -329,20 +288,21 @@ function createTag(e) {
 //Suppression du tag
 for (let tag of testTag) {
   tag.addEventListener("click", (e) => deleteTag(e));
-  //tag.addEventListener("click", (e) => test(e));
 }
 
 function deleteTag(e) {
   let tag = e.target;
   tag.remove();
+  tagDiv.textContent = "";
   searchBar.value = "";
   displayRecipes(recipes);
   arrayUstensils = [];
   displayUstentils(filtredArrayUstensils);
-  arrayTestAddTag = [];
+  arrayAppliance = [];
   displayAppliances(filtredArrayAppliance);
   arrayIngredients = [];
   displayIngredients(filtredArrayIngredients);
+  window.location.reload();
 }
 
 function searchByTag(e) {

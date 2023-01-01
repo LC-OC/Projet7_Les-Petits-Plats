@@ -4,6 +4,7 @@ export let cards = document.getElementsByClassName("cards");
 export let lists = document.getElementsByClassName("lists");
 export const recipesSection = document.querySelector(".cards");
 export const divCards = document.getElementById("cards-recipes");
+export let searchElement = document.getElementsByClassName("col-4");
 export const buttonAppareils = document.getElementById("button-appareils");
 export const buttonUstensiles = document.getElementById("button-ustensiles");
 export const buttonIngredients = document.getElementById("button-ingredients");
@@ -25,4 +26,3 @@ export const errorUstensils = document.getElementById("error_ustensils");
 export const errorAppareils = document.getElementById("error_appareil");
 export const errorIngredients = document.getElementById("error_ingredient");
 export const tagDiv = document.getElementById("tag");
-
